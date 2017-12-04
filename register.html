@@ -1,0 +1,37 @@
+<html>
+<title>Registraion Page</title>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="register.css">
+  <body>
+    <div class="image"><img src="sonaraylogo.png"/></div>
+    <div class="body">
+      <h1>Registration Page</h1>
+
+    <div class="fields">
+
+    <label>Name</label>
+    <input type="text" name="name" id="name" placeholder="please enter your name .. " size="25" required/> <br><br>
+    <label>Email</label>
+    <input type="text" name="email" id="email" placeholder="please enter your email .. " size="25" required/> <br><br>
+    <label>Contact</label>
+    <input type="name" name="contact" id="contact" placeholder="please enter your mobile number .. " size="25" required/> <br><br>
+    <label>Password</label>
+    <input type="password" name="password" id="password" placeholder="please enter your password .. " size="25" required/> <br><br>
+    <label>Re-enter Password</label>
+    <input type="password" name="checkpassword" id="checkpassword" placeholder="please re-enter your password .." size="25" required/> <br><br>
+    <button class="button" onclick="userRegistration()">Register</button> <br><br>
+
+    <label>Already Registered?</label>
+    <a href = "login.html">Login here</a>
+
+    </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script type="text/javascript" src="function.js"></script>
+
+</body>
+</head>
+</html>

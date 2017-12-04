@@ -3,7 +3,11 @@
   <head>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/master.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+      <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
   </head>
@@ -18,32 +22,71 @@
               <div id="slider-width" class="slider"></div>
               <input type="text" name="width" value="" class="width">
 
-              <label for="Height">Height</label>
+              <label for="height">Height</label>
               <div id="slider-height" class="slider"></div>
               <input type="text" name="height" value="" class="height">
 
-              <select class="" name="light-application">
-                <option value="option-one">option one</option>
-                <option value="option-two">option two</option>
-                <option value="option-three">option three</option>
-              </select>
+
         </div>
         <div class="output">
-              <div class="room">
-              </div>
-              <div class="circleHolder">
-                <div class="circle circle4" id="circle4"></div>
-                  <div class="circle circle3" id="circle3"></div>
-                    <div class="circle circle2" id="circle2"></div>
-                      <div class="circle circle1" id="circle1"></div>
 
-             </div>
-        </div>
+            <table class="room-container">
+                <tr>
+
+                    <td>
+                        <div class="scene">
+                            <div class="cube">
+                                <div class="side back"></div>
+                                <div class="side left"></div>
+                                <div class="side right"></div>
+                                <div class="side top">
+                                    <div class="room2">
+                                    </div>
+                                </div>
+                                <div class="side bottom">
+                                    <div class="room">
+                                    </div>
+                                </div>
+                                <div class="side front"></div>
+
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div class="information">
+                        <div class="displaylight">You need to install</div>
+                        <div  class ="xaxis">Length:</div>
+                            <div class ="yaxis">Width:</div>
+                        <div class="zaxis">Height:</div>
+                        <div class="luxlv">Lux level:</div>
+                        <div class="lighttype">Light Type:</div>
+                            <div class="openjob">Name your job!</div>
+                            <div class="job">Name:
+                                <input class="jobname" value="Job 1">
+                                <button class="save">Save</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="joblist">
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
         </div>
     </div>
-    <div class="">
-      <button type="button" name="" value="circle" id="circleSubmit">Circle</button>
-    </div>
+
+
+    <script>
+
+
+
+    </script>
     <script type="text/javascript" src="js/formula.js">
 
     </script>
