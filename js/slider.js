@@ -1,55 +1,7 @@
 
-var data = null
-var config = {
-    apiKey: "AIzaSyAi2uLzEvHu2_R6r_QQxr0DVXQkpz_LwqA",
-    authDomain: "light-simulating-calculator.firebaseapp.com",
-    databaseURL: "https://light-simulating-calculator.firebaseio.com",
-    projectId: "light-simulating-calculator",
-    storageBucket: "light-simulating-calculator.appspot.com",
-    messagingSenderId: "982520848532"
-};
-firebase.initializeApp(config);
-var database = firebase.database();
-var ref = database.ref("data")
-var refjob = database.ref("Simulation Data")
-ref.on("value", function(snapshot) {
-    test = snapshot.val()
-    getdata2(test)
 
-}, function (error) {
-    console.log("Error: " + error.code);
-});
-
-
-//variables
-var cube          = $(".cube")
-var room          = $( ".room ");
-var ceilling      = $(".room2");
-var roomLength    = $( ".length" );
-var roomHeight    = $( ".height" );
-var roomWidth     = $( ".width" );
-var xaxis         = $(".xaxis");
-var yaxis         = $(".yaxis");
-var zaxis         = $(".zaxis");
-var lighttype     = $(".lighttype")
-var luxlv         = $(".luxlv")
-var displaylight  = $(".displaylight")
-var joblistshowbox= $(".joblist")
-var joblist       = []
-var currentlightwidth = 60;
-var user = firebase.auth().currentUser;
-var useremail = ""
-var circlevals = [0.25,0.5,0.75,1]
-
-if (user) {
-    useremail = useremail += user
-} else {
-    // No user is signed in.
-}
 //setting room width, height and length values
-lighttype.text("Light Type: "+150+"W")
-luxlv.text("Lux level: "+200)
-var jobs = ""
+var jobs = "";
 refjob.on("value", function(snapshot) {
     //var a = snapshot.val();
     snapshot.forEach(function (childSnapshot) {
@@ -59,29 +11,20 @@ refjob.on("value", function(snapshot) {
         jobs += option
     })
     joblistshowbox.html("Jobs:<select > " +jobs+ "</select>")
-})
+});
 
 
-roomLength.val(10);
-roomWidth.val(10);
-roomHeight.val(6);
 
-var currentlength = 10
-var currentwidth =10
-var currentheight = 6
-var currentdata = null
-var righttranslateX = 150
-var righttranslateY =50
-var righttranslateZ = 0
 
 
 function getdata2(test) {
     data = test;
-    getdata("200")
+    getdata(appLux[2]);
 }
 
 //helper functions for the number of light calculation
 function getdata(lux){
+    console.log("lux getdata "+lux);
     if(currentheight<7.5){
         currentdata = data[0][lux]
     }else if(currentheight>=7.5&&currentheight<10.5){
@@ -103,262 +46,202 @@ function getlights(length,width){
     }
 }
 
-//preload the data
-
 
 //slider functions
-$( "#slider-length" ).slider({
-  range: "min",
-  value: 10,
-  min: 10,
-  max: 100,
-  slide: function( event, uilength ) {
-    roomLength.val( uilength.value );
-    room.height(uilength.value+300+ "px");
-    xaxis.text("Length: "+uilength.value);
-    currentlength = uilength.value;
-    var light = getlights(currentlength,currentwidth);
-      displaylight.text("You need to install "+light+" lights.")
-      var r = currentlightwidth;
-      var lights = arrangelight(light,currentwidth,uilength.value,r,300);
-      var sum = ""
-      var sum2 = ""
-      for(light in lights){
+var sliderFunctions = function(sliderOrientation){
+  sliderLength.slider({
+    range: "min",
+    orientation: sliderOrientation,
+    value: 2,
+    min: 2,
+    max: 20,
+    slide: function( event, uilength ) {
+      sliderLengthText.text(uilength.value*5);
+      roomLength.val( uilength.value );
+      room.height(uilength.value+300+ "px");
+      xaxis.text("Length: "+uilength.value);
+      currentlength = uilength.value;
+      var light = getlights((currentlength*5),(currentwidth*5));
+        totalLightsText.text("Total Lights: "+light);
+        var r = $(".circleHolder").width();
+        var lights = arrangelight(light,currentwidth,uilength.value,r,300);
 
-          var width = Math.ceil(lights[light].x)
-          var length = Math.ceil(lights[light].y)
-          var ceil = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
-              "<div class='circle circle0'></div></div>"
-          var light = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
-              "<div class='circle circle4'></div>" +
-              "<div class='circle circle3'></div>"+
-              "<div class='circle circle2'></div>"+
-              "<div class='circle circle1'></div>" +
-              "</div>"
+        var sum = ""
+        var sum2 = ""
+        for(light in lights){
+            var width = Math.ceil(lights[light].x)
+            var length = Math.ceil(lights[light].y)
+            var ceil = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
+                "<div class='circle circle0'></div></div>"
+            var light = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
+                "<div class='circle circle4'></div>" +
+                "<div class='circle circle3'></div>"+
+                "<div class='circle circle2'></div>"+
+                "<div class='circle circle1'></div>" +
+                "</div>"
 
-          sum += light;
-          sum2 += ceil;
+            sum += light;
+            sum2 += ceil;
 
-      }
-      ceilling.html(sum2)
-      room.html(sum)
-      $(".circleHolder").width(currentlightwidth+ "px");
-      $(".circleHolder").height(currentlightwidth+ "px");
+        }
+        ceilling.html(sum2)
+        room.html(sum)
 
-      $(".circle1").width(circlevals[0] * 100+"%");
-      $(".circle1").height(circlevals[0] * 100+"%");
+     //   $(".information").css({"margin-top":uilength.value*2+(currentheight-6)*10+"px"})
+        $(".cube").css({"margin-left":-(uilength.value+currentwidth)/1.5+"px","margin-top":-uilength.value+"px"})
 
-      $(".circle2").width(circlevals[1] * 100+"%");
-      $(".circle2").height(circlevals[1] * 100+"%");
 
-      $(".circle3").width(circlevals[2] * 100+"%");
-      $(".circle3").height(circlevals[2] * 100+"%");
+        $(".left").css({"width":uilength.value+300+"px",
+            "transform": "translateX("+(-150-uilength.value)+"px)" +
+            "  translateZ("+(uilength.value/2)+"px)  " +
+            "translateY("+(50+uilength.value/3.1)+"px)  rotateY(90deg)"});
 
-      $(".circle4").width(circlevals[3]* 100+"%");
-      $(".circle4").height(circlevals[3] * 100+"%");
+        righttranslateY = 50+uilength.value/1.45
+        righttranslateZ = -uilength.value/2
+        $(".right").css({"width":uilength.value+300+"px",
+            "transform": "translateX("+righttranslateX+"px) " +
+           "  translateZ("+righttranslateZ+"px)  " +
+            "translateY("+righttranslateY +"px) rotateY(90deg)"})
 
-      //cube
-      $(".cube").css({"margin-left":-(uilength.value+currentwidth)/1.5+"px","margin-top":-uilength.value+"px"})
+        $(".top").css({"height":uilength.value+300+"px",
+            "transform": " translateZ("+(uilength.value*2) +"px)" +
+            "translateX("+(-100-uilength.value)+ "+px) rotateX(90deg)"});
 
-      $(".left").css({"width":uilength.value+300+"px",
-          "transform": "translateX("+(-150-uilength.value)+"px)" +
-          "  translateZ("+(uilength.value/2)+"px)  " +
-          "translateY("+(50+uilength.value/3.1)+"px)  rotateY(90deg)"});
+        $(".bottom").css({"height":uilength.value+300+"px",
+            "transform": "translateY("+(100-uilength.value/3)+"px)" +
+            "translateX("+(uilength.value)+"px rotateX(90deg)"});
 
-      righttranslateY = 50+uilength.value/1.45
-      righttranslateZ = -uilength.value/2
-      $(".right").css({"width":uilength.value+300+"px",
-          "transform": "translateX("+righttranslateX+"px) " +
-         "  translateZ("+righttranslateZ+"px)  " +
-          "translateY("+righttranslateY +"px) rotateY(90deg)"})
+        $(".front").css({ "transform": "translateZ("+(uilength.value+150)+"px) " +
+        "translateY("+(50+uilength.value/3.1)+"px)"+
+            "translateX("+(-uilength.value/2)+"px)"})
 
-      $(".top").css({"height":uilength.value+300+"px",
-          "transform": " translateZ("+(uilength.value*2) +"px)" +
-          "translateX("+(-100-uilength.value)+ "+px) rotateX(90deg)"});
-
-      $(".bottom").css({"height":uilength.value+300+"px",
-          "transform": "translateY("+(100-uilength.value/3)+"px)" +
-          "translateX("+(uilength.value)+"px rotateX(90deg)"});
-
-      $(".front").css({ "transform": "translateZ("+(uilength.value+150)+"px) " +
-      "translateY("+(50+uilength.value/3.1)+"px)"+
-          "translateX("+(-uilength.value/2)+"px)"})
-
-      $(".back").css({"left":0+"px","margin-top":0+"px",
-          "transform": "translateY("+(50+uilength.value/3.1)+"px)"+
-         "translateX("+(-uilength.value/2)+"px)"+
-          "translateZ("+(-150)+"px)"})
-  }
-});
-
-roomLength.change(function() {
-  var oldVal = $( "#slider-length").slider("option", "value");
-  var newVal = $(this).val();
-  if (isNaN(newVal) || newVal < 8 || newVal > 200) {
-    roomLength.val(oldVal);
-
-  } else {
-    $( "#slider-length" ).slider("option", "value", newVal);
-    room.height(newVal*5 + "px");
-
-  }
-});
-
-$( "#slider-height" ).slider({
-  range: "min",
-  value: 6,
-  min: 6,
-  max: 12,
-  slide: function( event, uiheight ) {
-    var result = luxCircles(uiheight.value);
-    circlevals = Object.values(result)
-    //const vals = Object.keys(result).map(key => result[key]);
-     // const vals = Object.keys(result).map(function (key) {
-       //   result[key]
-     // }
-
-    roomHeight.val(uiheight.value);
-    currentheight = uiheight.value;
-    getdata("200")
-      var light = getlights(currentlength,currentwidth);
-      displaylight.text("You need to install "+light+" lights.")
- //   var r = uiheight.value/Math.sqrt(3)*17.32/5;
-      zaxis.text("Height: "+uiheight.value);
-      if(uiheight.value<9){
-          currentlightwidth = 60;
-      }else if(uiheight.value){
-          currentlightwidth = 80;
-      }else{
-          currentlightwidth = 100;
-      }
-    var r = currentlightwidth;
-      var lights = arrangelight(light,currentwidth,currentlength,r,300);
-      var sum = ""
-      var sum2 = ""
-      for(light in lights){
-          var width = Math.ceil(lights[light].x)
-          var length = Math.ceil(lights[light].y)
-          var ceil = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
-              "<div class='circle circle0'></div></div>"
-          var light = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
-              "<div class='circle circle4'></div>" +
-              "<div class='circle circle3'></div>"+
-              "<div class='circle circle2'></div>"+
-              "<div class='circle circle1'></div>" +
-              "</div>"
-          sum += light;
-          sum2 += ceil;
-      }
-      room.html(sum)
-      ceilling.html(sum2)
-      $(".information").css({"margin-top":currentlength*2+(uiheight.value-6)*20+"px"});
-
-      $(".circleHolder").width(currentlightwidth+ "px");
-      $(".circleHolder").height(currentlightwidth+ "px");
-      $(".circle1").width(circlevals[0] * 100+"%");
-      $(".circle1").height(circlevals[0] * 100+"%");
-//      $(".circle1").css({"background-color":"radial-gradient(#ff2b1d,#FF8216)"});
-      $(".circle2").width(circlevals[1] * 100+"%");
-      $(".circle2").height(circlevals[1] * 100+"%");
- //     $(".circle2").css("background-color","radial-gradient(#FF8216,#fffc34)");
-      $(".circle3").width(circlevals[2] * 100+"%");
-      $(".circle3").height(circlevals[2] * 100+"%");
- //     $(".circle3").css("background-color","radial-gradient(#fffc34,#02d649)");
-      $(".circle4").width(circlevals[3]* 100+"%");
-      $(".circle4").height(circlevals[3] * 100+"%");
- //     $(".circle4").css("background-color","radial-gradient(#02d649,#162fad)");
-
-      $(".left").css({"height":uiheight.value*100/6+"px"})
-      $(".right").css({"height":uiheight.value*100/6+"px"})
-      $(".front").css({"height":uiheight.value*100/6+"px"})
-      $(".back").css({"height":uiheight.value*100/6+"px"})
-      $(".bottom").css({"top":uiheight.value*100/6-200+"px"})
-  }
-});
-
-roomHeight.change(function() {
-  var oldVal = $( "#slider-height").slider("option", "value");
-  var newVal = $(this).val();
-  if (isNaN(newVal) || newVal < 6 || newVal > 12) {
-    roomHeight.val(oldVal);
-  } else {
-    $( "#slider-height" ).slider("option", "value", newVal);
-  }
-});
-
-$( "#slider-width" ).slider({
-  range: "min",
-  value: 10,
-  min: 10,
-  max: 100,
-  slide: function( event, uiwidth ) {
-    roomWidth.val(uiwidth.value);
-    room.width(uiwidth.value+300+ "px");
-    yaxis.text("Width: "+uiwidth.value);
-    currentwidth = uiwidth.value;
-    var light = getlights(currentlength,currentwidth);
-    var r = currentlightwidth;
-    displaylight.text("You need to install "+light+" lights.")
-    var lights = arrangelight(light,uiwidth.value,currentlength,r,300);
-    var sum = ""
-      var sum2 = ""
-    for(light in lights){
-        var width = Math.ceil(lights[light].x)
-        var length = Math.ceil(lights[light].y)
-        var ceil = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
-            "<div class='circle circle0'></div></div>"
-        var light = "<div class='circleHolder'style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
-            "<div class='circle circle4'></div>" +
-            "<div class='circle circle3'></div>"+
-            "<div class='circle circle2'></div>"+
-            "<div class='circle circle1'></div>" +
-            "</div>"
-        sum += light;
-        sum2 += ceil;
+        $(".back").css({"left":0+"px","margin-top":0+"px",
+            "transform": "translateY("+(50+uilength.value/3.1)+"px)"+
+           "translateX("+(-uilength.value/2)+"px)"+
+            "translateZ("+(-150)+"px)"})
     }
+  });
+
+  sliderHeight.slider({
+    range: "min",
+    orientation: sliderOrientation,
+    value: 6,
+    min: 6,
+    max: 12,
+    slide: function( event, uiheight ) {
+      sliderHeightText.text(uiheight.value);
+      var result = luxCircles(uiheight.value);
+      var vals = Object.values(result)
+      //const vals = Object.keys(result).map(key => result[key]);
+       // const vals = Object.keys(result).map(function (key) {
+         //   result[key]
+       // })
+      console.log(vals);
+
+      roomHeight.val(uiheight.value);
+      currentheight = uiheight.value;
+      getdata(appLux[2]);
+        var light = getlights((currentlength*5),(currentwidth*5));
+        totalLightsText.text("Total Lights: "+light);
+      //  var r = uiheight.value/Math.sqrt(3)*17.32/5;
+        zaxis.text("Height: "+uiheight.value);
+        var r = $(".circleHolder").width();
+        var lights = arrangelight(light,currentwidth,currentlength,r,300);
+        var sum = ""
+        var sum2 = ""
+        for(light in lights){
+            var width = Math.ceil(lights[light].x)
+            var length = Math.ceil(lights[light].y)
+            var ceil = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
+                "<div class='circle circle0'></div></div>"
+            var light = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
+                "<div class='circle circle4'></div>" +
+                "<div class='circle circle3'></div>"+
+                "<div class='circle circle2'></div>"+
+                "<div class='circle circle1'></div>" +
+                "</div>"
+            sum += light;
+            sum2 += ceil;
+        }
+        room.html(sum)
+        ceilling.html(sum2)
+        $(".information").css({"margin-top":currentlength*2+(uiheight.value-6)*20+"px"});
+
+        $(".circleHolder").width(uiheight.value/Math.sqrt(3)*17.32 + "px");
+        $(".circleHolder").height(uiheight.value/Math.sqrt(3)*17.32+ "px");
+        $(".circle1").width(vals[0] * 100+"%");
+        $(".circle1").height(vals[0] * 100+"%");
+        $(".circle1").css({"background-color":"radial-gradient(#ff2b1d,#FF8216)"});
+        $(".circle2").width(vals[1] * 100+"%");
+        $(".circle2").height(vals[1] * 100+"%");
+        $(".circle2").css("background-color","radial-gradient(#FF8216,#fffc34)");
+        $(".circle3").width(vals[2] * 100+"%");
+        $(".circle3").height(vals[2] * 100+"%");
+        $(".circle3").css("background-color","radial-gradient(#fffc34,#02d649)");
+        $(".circle4").width(vals[3]* 100+"%");
+        $(".circle4").height(vals[3] * 100+"%");
+        $(".circle4").css("background-color","radial-gradient(#02d649,#162fad)");
+
+        $(".left").css({"height":uiheight.value*100/6+"px"})
+        $(".right").css({"height":uiheight.value*100/6+"px"})
+        $(".front").css({"height":uiheight.value*100/6+"px"})
+        $(".back").css({"height":uiheight.value*100/6+"px"})
+        $(".bottom").css({"top":uiheight.value*100/6-200+"px"})
+    }
+  });
+
+
+  sliderWidth.slider({
+    range: "min",
+    orientation: sliderOrientation,
+    value: 2,
+    min: 2,
+    max: 20,
+    slide: function( event, uiwidth ) {
+      sliderWidthText.text(uiwidth.value*5);
+      roomWidth.val(uiwidth.value);
+
+      room.width(uiwidth.value+300+ "px");
+      yaxis.text("Width: "+uiwidth.value);
+      currentwidth = uiwidth.value;
+      var light = getlights((currentlength*5),(currentwidth*5));
+      var r = $(".circleHolder").width();
+      totalLightsText.text("Total Lights: "+light);
+      var lights = arrangelight(light,uiwidth.value,currentlength,r,300);
+      var sum = ""
+        var sum2 = ""
+      for(light in lights){
+          var width = Math.ceil(lights[light].x)
+          var length = Math.ceil(lights[light].y)
+          var ceil = "<div class='circleHolder' style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
+              "<div class='circle circle0'></div></div>"
+          var light = "<div class='circleHolder'style='margin-left:"+width+"px;margin-top:"+length+"px'>" +
+              "<div class='circle circle4'></div>" +
+              "<div class='circle circle3'></div>"+
+              "<div class='circle circle2'></div>"+
+              "<div class='circle circle1'></div>" +
+              "</div>"
+          sum += light;
+          sum2 += ceil;
+      }
       room.html(sum)
-      ceilling.html(sum2)
-
-      $(".circleHolder").width(currentlightwidth+ "px");
-      $(".circleHolder").height(currentlightwidth+ "px");
-      $(".circle1").width(circlevals[0] * 100+"%");
-      $(".circle1").height(circlevals[0] * 100+"%");
-
-      $(".circle2").width(circlevals[1] * 100+"%");
-      $(".circle2").height(circlevals[1] * 100+"%");
-
-      $(".circle3").width(circlevals[2] * 100+"%");
-      $(".circle3").height(circlevals[2] * 100+"%");
-
-      $(".circle4").width(circlevals[3]* 100+"%");
-      $(".circle4").height(circlevals[3] * 100+"%");
-
-      $(".cube").css({"margin-left":-(uiwidth.value+currentlength)/1.5+"px"})
-      $(".front").css({"width":uiwidth.value+300+"px"})
-      $(".back").css({"width":uiwidth.value+300+"px"})
-      $(".top").css({"width":uiwidth.value+300+"px"})
-      $(".bottom").css({"width":uiwidth.value+300+"px"})
-      righttranslateX = 150+currentwidth
-      $(".right").css({ "transform":
-          "translateZ("+(righttranslateZ)+"px)"+
-          "translateX("+righttranslateX+"px) translateY("+righttranslateY+"px) rotateY(90deg)"
-      })
+        ceilling.html(sum2)
+        var left = $(".cube").css('marginLeft')
+        $(".cube").css({"margin-left":-(uiwidth.value+currentlength)/1.5+"px"})
+        $(".front").css({"width":uiwidth.value+300+"px"})
+        $(".back").css({"width":uiwidth.value+300+"px"})
+        $(".top").css({"width":uiwidth.value+300+"px"})
+        $(".bottom").css({"width":uiwidth.value+300+"px"})
+        righttranslateX = 150+currentwidth
+        $(".right").css({ "transform":
+            "translateZ("+(righttranslateZ)+"px)"+
+            "translateX("+righttranslateX+"px) translateY("+righttranslateY+"px) rotateY(90deg)"})
 
 
-  }
-});
+    }
+  });
 
-roomWidth.change(function() {
-
-  var oldVal = $( "#slider-width").slider("option", "value");
-  var newVal = $(this).val();
-  if (isNaN(newVal) || newVal < 8 || newVal > 200) {
-    roomWidth.val(oldVal);
-  } else {
-    $( "#slider-width" ).slider("option", "value", newVal);
-    room.width(newVal*5 + "px");
-  }
-});
+};//slider functions end
 
 
 //save the cookies
@@ -370,22 +253,14 @@ $(".save").mouseout(function () {
 })
 
 $(".save").click(function () {
+    var project = currentlength +" "+currentwidth+" "+currentheight+" "+200;
     //30days to expired
     var jobname = $(".jobname").val();
-    //date
-    var currentdate = new Date();
-    var datetime = "Saved at: " + currentdate.getDate() + "/"
-        + (currentdate.getMonth()+1)  + "/"
-        + currentdate.getFullYear() + " "
-        + currentdate.getHours() + ":"
-        + currentdate.getMinutes() + ":"
-        + currentdate.getSeconds();
-    console.log(datetime)
-    writeUserData(currentlength,currentwidth,currentheight,jobname,"jade",200,datetime);
+    setCookie("project1",project,30);
+    writeUserData(currentlength,currentwidth,currentheight,jobname,"jade",200);
     alert("Job saved!")
     $(".openjob").css({"display":"inline"})
     $(".job").css({"display":"none"})
-
 
 })
 $(".openjob").click(function () {
@@ -401,15 +276,14 @@ $(".openjob").mouseout(function () {
 })
 
 
-function writeUserData(length, width, height,jobname,user,lux,date) {
+function writeUserData(length, width, height,jobname,user,lux) {
     database.ref("Simulation Data").push().set({
         length: length,
         width: width,
         height : height,
         lux: lux,
         user: user,
-        jobname: jobname,
-        date: date
+        jobname: jobname
     });
 }
 
@@ -703,5 +577,3 @@ function leastFactor(n) {
     }
     return n;
 }
-
-

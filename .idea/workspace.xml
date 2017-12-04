@@ -311,7 +311,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -367,7 +369,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -423,7 +427,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -448,7 +454,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="14" column="37" lean-forward="false" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -535,7 +543,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5301">
           <caret line="279" column="37" lean-forward="false" selection-start-line="279" selection-start-column="37" selection-end-line="279" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -567,7 +577,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5301">
           <caret line="279" column="37" lean-forward="true" selection-start-line="279" selection-start-column="37" selection-end-line="279" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -654,7 +666,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5320">
           <caret line="280" column="37" lean-forward="false" selection-start-line="280" selection-start-column="37" selection-end-line="280" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -717,7 +731,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5320">
           <caret line="280" column="37" lean-forward="true" selection-start-line="280" selection-start-column="37" selection-end-line="280" selection-end-column="37" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -742,7 +758,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3002">
           <caret line="158" column="42" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -829,7 +847,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3724">
           <caret line="196" column="30" lean-forward="true" selection-start-line="196" selection-start-column="30" selection-end-line="196" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -908,7 +928,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#sixtylux#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

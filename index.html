@@ -3,99 +3,107 @@
   <head>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/lights-home.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-      <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
-
-
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
   </head>
   <body>
+    <div class="cube-container">
+      <div class="output">
+
+          <table class="room-container">
+              <tr>
+
+                  <td>
+                      <div class="scene">
+                          <div class="cube">
+                              <div class="side back"></div>
+                              <div class="side left"></div>
+                              <div class="side right"></div>
+                              <div class="side top">
+                                  <div class="room2">
+                                  </div>
+                              </div>
+                              <div class="side bottom">
+                                  <div class="room">
+                                  </div>
+                              </div>
+                              <div class="side front"></div>
+
+                          </div>
+                      </div>
+
+                  </td>
+              </tr>
+              <!--<tr>
+
+                  <td>
+                      <div class="joblist">
+
+                      </div>
+                  </td>
+              </tr> -->
+          </table>
+
+      </div><!-- output -->
+      <div class="job-list"></div>
+    </div><!--cube container -->
     <div class="container">
-        <div class="input">
-              <label for="length">Length</label>
-              <div id="slider-length" class="slider"></div>
-              <input type="text" name="length" class="length" value="">
+      <div class="header"><img src="img/sonaray-logo.png" class="sonaray-logo" />
+      </div>
+      <div class="login"><p>Login/user email</p></div>
+      <div class="light-type">
+            <p class="light-type-text"></p>
+      </div>
+      <div class="nav-container m-fadeOut" id="nav-container">
 
-              <label for="width">Width</label>
-              <div id="slider-width" class="slider"></div>
-              <input type="text" name="width" value="" class="width">
+          <div class="slider-length-holder slider-holder">
+            <label for="length" class="slider-name">Length</label>
+            <div id="slider-length" class="slider"></div>
+            <span class="slider-length-text">10</span>
+          </div>
+          <div class="slider-width-holder slider-holder">
+            <label for="width" class="slider-name">Width</label>
+            <div id="slider-width" class="slider"></div>
+            <span class="slider-width-text">10</span>
+          </div>
+          <div class="slider-height-holder slider-holder">
+            <label for="height" class="slider-name">Height</label>
+            <div id="slider-height" class="slider"></div>
+            <span class="slider-height-text">6</span>
+          </div>
 
-              <label for="height">Height</label>
-              <div id="slider-height" class="slider"></div>
-              <input type="text" name="height" value="" class="height">
+      </div>
+      <div class="total-lights">
+        <p class="total-lights-text"></p>
+      </div>
 
+      <div class="light-home-column-one light-home">
 
-        </div>
-        <div class="output">
+        <div class="light-drop-one light-drop"><div class="line"></div>Warehousing</div>
+      </div>
+      <div class="light-home-column-two light-home">
+        <div class="light-drop-two light-drop"><div class="line"></div>Equestrian Arenas</div>
+      </div>
+      <div class="light-home-column-three light-home">
+        <div class="light-drop-three light-drop"><div class="line"></div>Commercial</div>
+      </div>
+      <div class="light-home-column-four light-home">
+        <div class="light-drop-four light-drop"><div class="line"></div>Industrial</div>
 
-            <table class="room-container">
-                <tr>
-
-                    <td>
-                        <div class="scene">
-                            <div class="cube">
-                                <div class="side back"></div>
-                                <div class="side left"></div>
-                                <div class="side right"></div>
-                                <div class="side top">
-                                    <div class="room2">
-                                    </div>
-                                </div>
-                                <div class="side bottom">
-                                    <div class="room">
-                                    </div>
-                                </div>
-                                <div class="side front"></div>
-
-                            </div>
-                        </div>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        <div class="information">
-                        <div class="displaylight">You need to install</div>
-                        <div  class ="xaxis">Length:</div>
-                            <div class ="yaxis">Width:</div>
-                        <div class="zaxis">Height:</div>
-                        <div class="luxlv">Lux level:</div>
-                        <div class="lighttype">Light Type:</div>
-                            <div class="openjob">Name your job!</div>
-                            <div class="job">Name:
-                                <input class="jobname" value="Job 1">
-                                <button class="save">Save</button>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="joblist">
-
-                        </div>
-                    </td>
-                </tr>
-            </table>
-
-        </div>
+      </div>
+      <button class="go-back-button" type="button" name="go-back">Go Back</button>
+      <button class="previous-jobs-button" type="button" name="previous-jobs">View Previous Jobs</button>
+      <button class="save-jobs-button" type="button" name="save-jobs">Save this Job</button>
+      <button class="email-jobs-button" type="button" name="email-jobs">Email This Job</button>
     </div>
-
-
-    <script>
-
-
-
-    </script>
-    <script type="text/javascript" src="js/formula.js">
-
-    </script>
-    <script type="text/javascript" src="js/slider.js">
-
-    </script>
-    <script type="text/javascript" src="js/circle.js">
-
-    </script>
+    <script type="text/javascript" src="js/variables.js"></script>
+    <script type="text/javascript" src="js/slider.js"></script>
+    <script type="text/javascript" src="js/lights-home.js"></script>
+    <script type="text/javascript" src="js/jobs.js"></script>
   </body>
-
 </html>
